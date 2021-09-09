@@ -5,6 +5,9 @@ const surrenderBtn = document.querySelector('#surrenderBtn')
 const battleLog = document.querySelector('.battle-log')
 const playerHealth = document.querySelector('.player-health')
 const monsterHealth = document.querySelector('.monster-health')
+const modalMessage = document.querySelector('#modal-message')
+const modal = document.querySelector('.modal')
+const modalClose = document.querySelector('.modal-close')
 
 class Log{
     constructor(entity, action, enemy, value){
@@ -49,6 +52,27 @@ function checkForWins(){
     }
 }
 
+function showGameOver(msg){
+    modalMessage.innerText = msg
+    modal.style.display = 'block'
+}
+
+function surrenderGame(){
+    setHealthValue(playerHealth, getHealthValue(playerHealth), 100)
+    
+}
+
+function hidePopUp(){
+    modal.style.display = 'none'
+    disableBtns([attchBtn,splAttackBtn,surrenderBtn,healBtn])
+}
+
+function disableBtns(btnArr){
+    btnArr.forEach(element => {
+        element.disabled = true
+    });
+}
+
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
@@ -90,4 +114,5 @@ function healPlayer(){
 attchBtn.addEventListener('click',playerAttackingMonster)
 splAttackBtn.addEventListener('click',playerSplAttackingMonster)
 healBtn.addEventListener('click',healPlayer)
-surrenderBtn.addEventListener('click',playerSplAttackingMonster)
+surrenderBtn.addEventListener('click',surrenderGame)
+modalClose.addEventListener('click',hidePopUp)
